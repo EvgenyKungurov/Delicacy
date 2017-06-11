@@ -1,0 +1,22 @@
+doctype html
+html
+  head
+    title DelicacyVue
+    = csrf_meta_tags
+
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+
+  body
+    ul.nav.nav-tabs.nav-pills
+      li.active role="presentation" 
+        = link_to 'Главная', root_path 
+      - if user_signed_in?
+        li role="presentation" 
+          = link_to 'Панель администратора', rails_admin_path 
+        li role="presentation"
+          = link_to "Выход", sign_out_path
+      - else
+        li role="presentation" 
+          = link_to 'Вход', sign_in_path
+    == yield
