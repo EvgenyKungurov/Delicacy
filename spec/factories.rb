@@ -1,4 +1,11 @@
 FactoryGirl.define do
+  factory :category do
+    
+  end
+  factory :item do
+    name "MyString"
+    category nil
+  end
   factory :role do
     
   end
