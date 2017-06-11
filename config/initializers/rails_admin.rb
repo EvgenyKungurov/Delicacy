@@ -47,4 +47,10 @@ RailsAdmin.config do |config|
     # history_index
     # history_show
   end
+
+  config.model Category do
+    edit do
+      exclude_fields :id, :lft, :rgt, :children, :depth
+    end
+  end
 end
