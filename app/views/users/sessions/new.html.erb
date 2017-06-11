@@ -1,4 +1,7 @@
 <div class="border-form-div">
+ <% if flash[:alert] %>
+    <span class='flash_error'> <%= flash[:alert] %></span>
+  <% end %>
 <h2>Log in</h2>
 
 <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
