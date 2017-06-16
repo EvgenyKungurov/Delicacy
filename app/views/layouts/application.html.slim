@@ -13,7 +13,7 @@ html
         = link_to 'Главная', root_path 
       - if user_signed_in?
         li role="presentation" 
-          = link_to 'Панель администратора', rails_admin_path 
+          = link_to 'Панель администратора', rails_admin_path
         li role="presentation"
           = link_to "Выход", sign_out_path
       - else

@@ -7,6 +7,7 @@ end
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.1'
+gem 'vuejs-rails'
 gem 'pg'
 gem 'slim-rails', '3.1.1'
 gem 'rolify'
@@ -50,6 +51,9 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'factory_girl_rails'
   gem 'guard-rspec', require: false
+  gem 'parallel_tests'
+  gem "capybara-webkit"
+  gem 'poltergeist'
 end
 
 group :test do

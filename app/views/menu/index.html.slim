@@ -1,5 +1,10 @@
 dib.row
   h2.text-center Меню ресторана
+  div.column.col-xs-3 id="sidebar"
+    h2 Заказ
+    - @current_order.order_items.each do |order_item|
+        p id="order_item_#{order_item.item.id}" #{order_item.item.name}
+  
 
 .row
   .col-sm-6.col-md-4
@@ -11,3 +16,11 @@ dib.row
         p
           a.btn.btn-primary href="#" role="button"  Button
           a.btn.btn-default href="#" role="button"  Button
+
+- @menu.each do |category|
+  - if category.children.count > 0
+      = link_to category.name, menu_path(category.id)
+  - else
+      - category.items.each do |item|
+          = item.name
+          = button_tag 'Добавить в заказ', value: item.name, id: "item_#{item.id}"
