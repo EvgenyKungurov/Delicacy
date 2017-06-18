@@ -1,15 +1,4 @@
 = render "order_panel"
-.row
-  .col-sm-6.col-md-4
-    .thumbnail
-      img alt="..." src="..." /
-      .caption
-        h3 Thumbnail label
-        p ...
-        p
-          a.btn.btn-primary href="#" role="button"  Button
-          a.btn.btn-default href="#" role="button"  Button
-
 - @menu.each do |category|
   - if category.children.count > 0
       = link_to category.name, menu_path(category.id)

@@ -1,0 +1,11 @@
+dib.row
+  h2.text-center Меню ресторана
+  div.column.col-xs-3 id="sidebar"
+    h2 id="order" Заказ № #{@current_order.id}
+    p id="total_price" Итого: #{@total_price} рублей
+    = button_tag 'Распечатать заказ и принять новый', id: "print_order"
+    - @current_order.order_items.each do |order_item|
+        div id="order_item_#{order_item.id}_block"
+          p id="order_item_#{order_item.id}" #{order_item.item.name}
+          input type="number" min="1" id="order_item_#{order_item.id}_quantity" item_id="#{order_item.item_id}" value="#{order_item.quantity}"
+          = button_tag 'Удалить', id: "order_item_#{order_item.id}_remove", method: :delete

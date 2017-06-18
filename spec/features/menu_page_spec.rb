@@ -25,27 +25,27 @@ RSpec.feature 'Menu page', type: :feature do
   end
 
   scenario 'user see button to cart if category have not nested category' do
-    visit menu_index_path
+    visit menu_path(category.id)
     expect(page).to have_button('Добавить в заказ', id: "item_#{item.id}")
   end
 
   scenario 'add to cart append to order panel and save in session', js: true do
-    visit menu_index_path
+    visit menu_path(category.id)
     click_button('Добавить в заказ', id: "item_#{item.id}")
     wait_for_ajax
-    visit menu_index_path
+    visit menu_path(category.id)
     expect(page).to have_css('p', text: item.name, id: "order_item_#{order_item.id + 1}")
   end
 
   scenario 'order panel have input type number', js: true do
-    visit menu_index_path
+    visit menu_path(category.id)
     click_button('Добавить в заказ', id: "item_#{item.id}")
     wait_for_ajax
     expect(page).to have_css('input', id: "order_item_#{order_item.id + 1}_quantity")
   end
 
   scenario 'change input type number will be changing value', js: true do
-    visit menu_index_path
+    visit menu_path(category.id)
     click_button('Добавить в заказ', id: "item_#{item.id}")
     wait_for_ajax
     find('input', id: "order_item_#{order_item.id + 1}_quantity").set(20)
@@ -54,7 +54,7 @@ RSpec.feature 'Menu page', type: :feature do
   end
 
   scenario 'order panel have total_price', js: true do
-    visit menu_index_path
+    visit menu_path(category.id)
     click_button('Добавить в заказ', id: "item_#{item.id}")
     wait_for_ajax
     find('input', id: "order_item_#{order_item.id + 1}_quantity").set(2)
@@ -63,7 +63,7 @@ RSpec.feature 'Menu page', type: :feature do
   end
 
   scenario 'add tow item to order panel should be equqk total_price two items', js: true do
-    visit menu_index_path
+    visit menu_path(category.id)
     click_button('Добавить в заказ', id: "item_#{item.id}")
     click_button('Добавить в заказ', id: "item_#{item_2.id}")
     wait_for_ajax
@@ -72,7 +72,7 @@ RSpec.feature 'Menu page', type: :feature do
   end
 
   scenario 'remove item on order panel will be decrease total_price', js: true do
-    visit menu_index_path
+    visit menu_path(category.id)
     click_button('Добавить в заказ', id: "item_#{item.id}")
     wait_for_ajax
     click_button('Удалить')
@@ -81,11 +81,11 @@ RSpec.feature 'Menu page', type: :feature do
   end
 
   scenario 'to print button should be print order and delete order from session', js: true do
-    visit menu_index_path
+    visit menu_path(category.id)
     click_button('Добавить в заказ', id: "item_#{item.id}")
     wait_for_ajax
     click_button('Распечатать заказ и принять новый')
-    visit menu_index_path
+    visit menu_path(category.id)
     expect(find('h2', id: 'order').text).to have_text("Заказ № #{Order.last.id}")
   end
 end
