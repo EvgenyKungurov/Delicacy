@@ -11,6 +11,7 @@ FactoryGirl.define do
   factory :item do
     name "Зеленый чай"
     category nil
+    price BigDecimal.new('25')
   end
   factory :role do
   end

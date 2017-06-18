@@ -6,9 +6,20 @@ class OrdersController < ApplicationController
 
     respond_to do |format|
       if order_item.save
-        format.json { render json: order_item }
+        format.json { render json: { order_item: order_item, order_total_price: @order.order_items.pluck(:total_price).sum.to_s } }
       else
         format.json { render json: order_item.errors }
+      end
+    end
+  end
+
+  def new
+    session[:order_id] = nil
+    respond_to do |format|
+      if session[:order_id].nil?
+        format.json { render json: { status: 'Созднан новый заказ' } }
+      else
+        format.json { render json: { status: 'Ошибка создания заказа' } }
       end
     end
   end
@@ -23,5 +34,6 @@ class OrdersController < ApplicationController
 
   def order_params
     params.require(:order).permit(:item_id, :quantity)
+          .merge(total_price: Item.find(params[:order][:item_id]).price)
   end
 end

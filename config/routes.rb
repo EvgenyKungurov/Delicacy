@@ -11,7 +11,8 @@ Rails.application.routes.draw do
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   root 'menu#index'
-  resources :orders
+  resources :orders, only: [:create, :new]
+  resources :order_items, only: [:update, :destroy]
   resources :menu, only: [:index, :show]
   get "/...", to: 'menu#index'
 end
