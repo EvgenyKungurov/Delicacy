@@ -8,6 +8,15 @@ RSpec.describe Category, type: :model do
 
   it { should have_many(:items) }
 
+  it { should have_attached_file(:image) }
+
+  it do
+    should validate_attachment_content_type(:image)
+      .allowing('image/png', 'image/jpg', 'image/jpeg')
+      .rejecting('text/plain', 'text/xml')
+  end
+  it { should validate_attachment_size(:image).less_than(1.megabytes) }
+
   describe 'before_save' do
     it 'should invoke #name_capitalize' do
       expect(subject).to receive(:name_capitalize)

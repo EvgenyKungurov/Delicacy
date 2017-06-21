@@ -1,8 +1,19 @@
 = render "order_panel"
-- @menu.each do |category|
-  - if category.children.count > 0
-      = link_to category.name, menu_path(category.id)
-  - else
-    - category.items.each do |item|
-        = item.name
-        = button_tag 'Добавить в заказ', value: item.name, id: "item_#{item.id}"
+
+div.column.col-xs-9
+  div.row
+    - if @menu.size > 1
+      - @menu.each do |category|
+          div.col-sm-6.col-md-4
+            .thumbnail
+              = link_to (image_tag category.image.url(:medium)), menu_path(category.id)
+              = link_to category.name, menu_path(category.id)
+    - else
+      - @menu.each do |category|
+        - category.items.each do |item|
+            div.col-sm-6.col-md-4
+              .thumbnail
+                .caption
+                  h3 = item.name
+                  h4 = "#{item.price} р"
+                  = button_tag 'Добавить в заказ', value: item.name, class: 'btn btn-success', id: "item_#{item.id}"       

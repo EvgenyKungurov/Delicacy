@@ -50,6 +50,12 @@ RailsAdmin.config do |config|
 
   config.model Category do
     edit do
+      # field :image do
+      #   # set a method available to your asset (defaults to :thumb, :thumbnail or '100x100>' for Dragonfly)
+      #   thumb_method :large
+      #   # for delete checkbox in forms
+      #   delete_method :asset_delete # don't forget to whitelist if you use :attr_accessible  
+      # end
       exclude_fields :id, :lft, :rgt, :children, :depth
     end
   end

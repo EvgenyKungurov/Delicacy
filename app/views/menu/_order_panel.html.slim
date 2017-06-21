@@ -1,11 +1,18 @@
-dib.row
-  h2.text-center Меню ресторана
+div.row
+  div.row.alert.alert-success
+    h2.text-center Меню ресторана
   div.column.col-xs-3 id="sidebar"
     h2 id="order" Заказ № #{@current_order.id}
-    p id="total_price" Итого: #{@total_price} рублей
-    = button_tag 'Распечатать заказ и принять новый', id: "print_order"
+    h2 id="total_price" Итого: #{@total_price} рублей
+    = button_tag 'Распечатать заказ и принять новый', class: 'btn btn-success', id: "print_order"
+    br
+    br
     - @current_order.order_items.each do |order_item|
-        div id="order_item_#{order_item.id}_block"
-          p id="order_item_#{order_item.id}" #{order_item.item.name}
-          input type="number" min="1" id="order_item_#{order_item.id}_quantity" item_id="#{order_item.item_id}" value="#{order_item.quantity}"
-          = button_tag 'Удалить', id: "order_item_#{order_item.id}_remove", method: :delete
+        div.bordered id="order_item_#{order_item.id}_block"
+          div.row
+            p id="order_item_#{order_item.id}" #{order_item.item.name}
+            div.row
+              div.column.col-xs-6
+                input type="number" class="form-control" min="1" id="order_item_#{order_item.id}_quantity" item_id="#{order_item.item_id}" value="#{order_item.quantity}"
+              div.column.col-xs-2
+                = button_tag 'Удалить', class: 'btn btn-warning', id: "order_item_#{order_item.id}_remove", method: :delete

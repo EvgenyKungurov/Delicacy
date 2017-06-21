@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170616134553) do
+ActiveRecord::Schema.define(version: 20170618084649) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,6 +22,10 @@ ActiveRecord::Schema.define(version: 20170616134553) do
     t.integer "rgt", null: false
     t.integer "depth", default: 0, null: false
     t.integer "children_count", default: 0, null: false
+    t.string "image_file_name"
+    t.string "image_content_type"
+    t.integer "image_file_size"
+    t.datetime "image_updated_at"
     t.index ["lft"], name: "index_categories_on_lft"
     t.index ["parent_id"], name: "index_categories_on_parent_id"
     t.index ["rgt"], name: "index_categories_on_rgt"

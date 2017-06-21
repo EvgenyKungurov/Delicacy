@@ -60,6 +60,15 @@
  #sidebar {
   background-color:#eee;
   height:100%;
-  position:fixed;
+  position: absolute;
   right:0;
+}
+
+.bordered {
+  margin-bottom: 2px;
+}
+
+.row {
+  margin-left: 0px;
+  margin-right: 0px;
 }

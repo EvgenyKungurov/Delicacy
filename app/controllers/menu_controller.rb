@@ -7,7 +7,11 @@ class MenuController < ApplicationController
   end
 
   def show
-    @menu = Category.find(params[:id]).children
+    @menu = if Category.find(params[:id]).children.size.positive?
+              Category.find(params[:id]).children
+            else
+              [Category.find(params[:id])]
+            end
   end
 
   private

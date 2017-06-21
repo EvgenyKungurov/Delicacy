@@ -10,10 +10,12 @@ $(document).on 'click', '[id^="item_"]', ->
     type: "POST" 
     data: order: { item_id: item_id, quantity: 1 }
     success: (response, total_price) ->
-      $('#sidebar').append('<div id=order_item_' + response['order_item'].id + '_block>')
-      $('#order_item_' + response['order_item'].id + '_block').append('<p id=order_item_' + response['order_item'].id + '>' + item_name + '</p>')
-      $('#order_item_' + response['order_item'].id + '_block').append('<input type=number min=1 id=order_item_' + response['order_item'].id + '_quantity value=' + response['order_item'].quantity + ' item_id=' + item_id + '>')
-      $('#order_item_' + response['order_item'].id + '_block').append('<button name=button type=submit id=order_otem_' + response['order_item'].id + '_remove>Удалить</button>')
+      $('#sidebar').append('<div class="bordered" id=order_item_' + response['order_item'].id + '_block>')
+      $('#order_item_' + response['order_item'].id + '_block').append(
+        '<p id=order_item_' + response['order_item'].id + '>' + item_name + '</p>
+        <div class=row><div class="column col-xs-6">
+        <input type=number class=form-control min=1 id=order_item_' + response['order_item'].id + '_quantity value=' + response['order_item'].quantity + ' item_id=' + item_id + '></div>
+        <div class="column col-xs-2"><button name=button class="btn btn-warning" type=submit id=order_otem_' + response['order_item'].id + '_remove>Удалить</button></div></div>')
       $('#total_price').text('Итого: ' + response['order_total_price'] + ' рублей')
 
 $(document).on 'change', '[id$="_quantity"]', ->

@@ -17,6 +17,7 @@ gem 'paperclip', git: 'git://github.com/thoughtbot/paperclip.git'
 gem 'devise'
 gem 'awesome_nested_set'
 gem 'bootstrap-sass'
+gem 'chartkick'
 # Use Puma as the app server
 gem 'puma', '~> 3.7'
 # Use SCSS for stylesheets
