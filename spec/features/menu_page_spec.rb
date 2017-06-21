@@ -7,7 +7,7 @@ RSpec.feature 'Menu page', type: :feature do
   end
   let!(:item) { FactoryGirl.create(:item, category_id: subcategory.id, price: 25) }
   let!(:item_2) { FactoryGirl.create(:item, name: 'Чай с молоком', category_id: subcategory.id, price: 30) }
-  let!(:order) { FactoryGirl.create(:order) }
+  let!(:order) { FactoryGirl.create(:order, id: 5) }
   let!(:order_item) do
     FactoryGirl.create(
       :order_item, item_id: item.id, quantity: 1, order_id: order.id, total_price: item.id
@@ -59,16 +59,15 @@ RSpec.feature 'Menu page', type: :feature do
     wait_for_ajax
     find('input', id: "order_item_#{order_item.id + 1}_quantity").set(2)
     wait_for_ajax
-    expect(find('p', id: 'total_price').text).to eq "Итого: #{item.price * 2} рублей"
+    expect(find('h2', id: 'total_price').text).to eq "Итого: #{item.price * 2} рублей"
   end
 
-  scenario 'add tow item to order panel should be equqk total_price two items', js: true do
+  scenario 'add two item to order panel should be equal total_price two items', js: true do
     visit menu_path(category.id)
     click_button('Добавить в заказ', id: "item_#{item.id}")
     click_button('Добавить в заказ', id: "item_#{item_2.id}")
     wait_for_ajax
-    wait_for_ajax
-    expect(find('p', id: 'total_price').text).to eq "Итого: #{item.price + item_2.price} рублей"
+    expect(find('h2', id: 'total_price').text).to eq "Итого: #{item.price + item_2.price} рублей"
   end
 
   scenario 'remove item on order panel will be decrease total_price', js: true do
@@ -77,7 +76,7 @@ RSpec.feature 'Menu page', type: :feature do
     wait_for_ajax
     click_button('Удалить')
     wait_for_ajax
-    expect(find('p', id: 'total_price').text).to eq "Итого: 0 рублей"
+    expect(find('h2', id: 'total_price').text).to eq 'Итого: 0 рублей'
   end
 
   scenario 'to print button should be print order and delete order from session', js: true do
@@ -86,6 +85,13 @@ RSpec.feature 'Menu page', type: :feature do
     wait_for_ajax
     click_button('Распечатать заказ и принять новый')
     visit menu_path(category.id)
-    expect(find('h2', id: 'order').text).to have_text("Заказ № #{Order.last.id}")
+    expect(find('h2', id: 'order').text).to eq "Заказ № #{Order.last.id}"
+  end
+
+  scenario 'order should be have number start with 1 for current day', js: true do
+    visit menu_path(category.id)
+    click_button('Добавить в заказ', id: "item_#{item.id}")
+    wait_for_ajax
+    expect(find('h2', id: 'order').text).to eq 'Заказ № 1'
   end
 end

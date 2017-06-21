@@ -23,5 +23,6 @@ class MenuController < ApplicationController
   def set_current_order
     order = session[:order_id] || session[:order_id] = Order.create.id
     @current_order = Order.includes(:order_items).find(order)
+    @order_number_today = Order.order_number_today
   end
 end
