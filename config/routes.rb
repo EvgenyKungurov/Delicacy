@@ -14,5 +14,7 @@ Rails.application.routes.draw do
   resources :orders, only: [:create, :new]
   resources :order_items, only: [:update, :destroy]
   resources :menu, only: [:index, :show]
-  get "/...", to: 'menu#index'
+  resources :statistics, only: [:index]
+
+  get '/...', to: 'menu#index'
 end

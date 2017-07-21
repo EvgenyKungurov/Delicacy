@@ -74,6 +74,8 @@ GEM
       activerecord (>= 4.0.0, < 5.2)
     bcrypt (3.1.11)
     bindex (0.5.0)
+    bootstrap-datepicker-rails (1.6.4.1)
+      railties (>= 3.0)
     bootstrap-sass (3.3.7)
       autoprefixer-rails (>= 5.2.1)
       sass (>= 3.3.4)
@@ -120,11 +122,14 @@ GEM
       factory_girl (~> 4.8.0)
       railties (>= 3.0.0)
     ffi (1.9.18)
+    filterrific (2.1.2)
     font-awesome-rails (4.7.0.2)
       railties (>= 3.2, < 5.2)
     formatador (0.2.5)
     globalid (0.4.0)
       activesupport (>= 4.2.0)
+    groupdate (3.2.0)
+      activesupport (>= 3)
     guard (2.14.1)
       formatador (>= 0.2.4)
       listen (>= 2.7, < 4.0)
@@ -346,6 +351,7 @@ PLATFORMS
 
 DEPENDENCIES
   awesome_nested_set
+  bootstrap-datepicker-rails
   bootstrap-sass
   byebug
   capybara (~> 2.13)
@@ -355,6 +361,8 @@ DEPENDENCIES
   coffee-rails (~> 4.2)
   devise
   factory_girl_rails
+  filterrific
+  groupdate
   guard-rspec
   jbuilder (~> 2.5)
   listen (>= 3.0.5, < 3.2)

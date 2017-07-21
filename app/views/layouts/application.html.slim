@@ -10,7 +10,9 @@ html
   body
     ul.nav.nav-tabs.nav-pills
       li.active role="presentation" 
-        = link_to 'Главная', root_path 
+        = link_to 'Главная', root_path
+      li role="presentation" 
+        = link_to 'Статистика', statistics_path
       - if user_signed_in?
         li role="presentation" 
           = link_to 'Панель администратора', rails_admin_path

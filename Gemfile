@@ -18,6 +18,9 @@ gem 'devise'
 gem 'awesome_nested_set'
 gem 'bootstrap-sass'
 gem 'chartkick'
+gem 'groupdate'
+gem 'filterrific'
+gem 'bootstrap-datepicker-rails'
 # Use Puma as the app server
 gem 'puma', '~> 3.7'
 # Use SCSS for stylesheets

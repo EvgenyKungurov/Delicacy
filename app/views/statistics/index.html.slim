@@ -1,0 +1,18 @@
+div.row
+  div.row.alert.alert-success
+    h2.text-center Статистика
+dib.row
+  h2 Общая статистика заказов по дням
+  = column_chart Order.group_by_day_of_week(:created_at, format: "%a").count
+div.row
+  h2 Статистика по товарам
+  = bar_chart @statistics
+
+
+div.row
+  = form_tag statistics_path, method: :get
+      div.row
+        = select_tag :item_id, options_from_collection_for_select(Item.all, :id, :name, Item.first.id), class: "btn btn-default"
+        = text_field_tag 'start_date', 'Начальная дата', data: { provide: 'datepicker', date_format: 'dd.mm.yyyy' }
+        = text_field_tag 'end_date', 'Конечная дата', data: { provide: 'datepicker', date_format: 'dd.mm.yyyy' }
+        = submit_tag "Поиск", class: "btn btn-default"
