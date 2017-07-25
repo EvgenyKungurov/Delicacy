@@ -1,18 +1,7 @@
 require 'rails_helper'
 
 RSpec.feature 'Menu page', type: :feature do
-  let!(:category) { FactoryGirl.create :category }
-  let!(:subcategory) do
-    FactoryGirl.create :category, name: 'чай', parent_id: category.id
-  end
-  let!(:item) { FactoryGirl.create(:item, category_id: subcategory.id, price: 25) }
-  let!(:item_2) { FactoryGirl.create(:item, name: 'Чай с молоком', category_id: subcategory.id, price: 30) }
-  let!(:order) { FactoryGirl.create(:order, id: 5) }
-  let!(:order_item) do
-    FactoryGirl.create(
-      :order_item, item_id: item.id, quantity: 1, order_id: order.id, total_price: item.id
-    )
-  end
+  include_examples 'order_with_dependencies'
 
   scenario 'User go to menu' do
     visit menu_index_path
@@ -22,11 +11,6 @@ RSpec.feature 'Menu page', type: :feature do
   scenario 'user go to menu and see categories' do
     visit menu_index_path
     expect(page).to have_text(category.name)
-  end
-
-  scenario 'user see button to cart if category have not nested category' do
-    visit menu_path(category.id)
-    expect(page).to have_button('Добавить в заказ', id: "item_#{item.id}")
   end
 
   scenario 'add to cart append to order panel and save in session', js: true do
@@ -85,13 +69,15 @@ RSpec.feature 'Menu page', type: :feature do
     wait_for_ajax
     click_button('Распечатать заказ и принять новый')
     visit menu_path(category.id)
-    expect(find('h2', id: 'order').text).to eq "Заказ № #{Order.last.id}"
+    expect(find('h2', id: 'order').text).to eq "Заказ № #{Order.order_number_today}"
   end
 
-  scenario 'order should be have number start with 1 for current day', js: true do
+  scenario 'not raise error if order was destroyed on server without delete from cookie', js: true do
     visit menu_path(category.id)
     click_button('Добавить в заказ', id: "item_#{item.id}")
     wait_for_ajax
-    expect(find('h2', id: 'order').text).to eq 'Заказ № 1'
+    Order.last.destroy
+    visit menu_path(category.id)
+    expect(find('h2', id: 'order').text).to eq "Заказ № #{Order.order_number_today}"
   end
 end

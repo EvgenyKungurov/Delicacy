@@ -3,13 +3,12 @@ FactoryGirl.define do
     order nil
   end
   factory :order do
-    
   end
   factory :category do
     name "Горячие напитки"
   end
   factory :item do
-    name "Зеленый чай"
+    name "Чай"
     category nil
     price BigDecimal.new('25')
   end

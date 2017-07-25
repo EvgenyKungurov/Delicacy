@@ -2,12 +2,12 @@ div.row
   div.row.alert.alert-success
     h2.text-center Меню ресторана
   div.column.col-xs-3 id="sidebar"
-    h2 id="order" Заказ № #{@order_number_today}
+    h2 id="order" Заказ № #{Order.order_number_today}
     h2 id="total_price" Итого: #{@total_price} рублей
     = button_tag 'Распечатать заказ и принять новый', class: 'btn btn-success', id: "print_order"
     br
     br
-    - @current_order.order_items.each do |order_item|
+    - @order.order_items.each do |order_item|
         div.bordered id="order_item_#{order_item.id}_block"
           div.row
             p id="order_item_#{order_item.id}" #{order_item.item.name}

@@ -1,4 +1,6 @@
 class OrderItemsController < ApplicationController
+  include OrdersHelper
+
   before_action :set_order
 
   def update
@@ -32,8 +34,6 @@ class OrderItemsController < ApplicationController
   end
 
   def set_order
-    return @order = Order.find(session[:order_id]) if session[:order_id]
-    session[:order_id] = Order.create.id
-    @order = Order.find(session[:order_id])
+    current_order
   end
 end

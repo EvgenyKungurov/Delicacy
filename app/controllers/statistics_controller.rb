@@ -1,6 +1,6 @@
 class StatisticsController < ApplicationController
   def index
-    @statistics = StatisticGenerator.new(statistics_params).call
+    @statistic = StatisticGenerator.new(statistics_params).call
   end
 
   private
