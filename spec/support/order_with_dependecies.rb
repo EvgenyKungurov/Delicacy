@@ -12,4 +12,12 @@ RSpec.shared_examples "order_with_dependencies" do
       :order_item, item_id: item.id, quantity: 1, order_id: order.id, total_price: item.id
     )
   end
+  let!(:order_in_kitchen) { FactoryGirl.create(:order, status: 1) }
+  let!(:item_3) { FactoryGirl.create(:item, name: 'Чай с лимоном', category_id: subcategory.id, price: 30) }
+  let!(:order_item_2) do
+    FactoryGirl.create(
+      :order_item, item_id: item_3.id, quantity: 1, order_id: order_in_kitchen.id,
+                   total_price: item.id
+    )
+  end
 end

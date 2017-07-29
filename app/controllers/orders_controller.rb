@@ -1,12 +1,15 @@
 class OrdersController < ApplicationController
-  before_action :set_order
+  include OrdersHelper
+
+  before_action :current_order
 
   def create
     order_item = @order.order_items.build(order_params)
 
     respond_to do |format|
       if order_item.save
-        format.json { render json: { order_item: order_item, order_total_price: @order.order_items.pluck(:total_price).sum.to_s } }
+        response = { order_item: order_item, order_total_price: total_price }
+        format.json { render json: response }
       else
         format.json { render json: order_item.errors }
       end
@@ -14,7 +17,9 @@ class OrdersController < ApplicationController
   end
 
   def new
-    session[:order_id] = nil
+    order_status(params[:order][:status])
+    delete_order_from_cookie
+    send_notify_to_kitchen
     respond_to do |format|
       if session[:order_id].nil?
         format.json { render json: { status: 'Созднан новый заказ' } }
@@ -25,12 +30,6 @@ class OrdersController < ApplicationController
   end
 
   private
-
-  def set_order
-    return @order = Order.find(session[:order_id]) if session[:order_id]
-    session[:order_id] = Order.create.id
-    @order = Order.find(session[:order_id])
-  end
 
   def order_params
     params.require(:order).permit(:item_id, :quantity)

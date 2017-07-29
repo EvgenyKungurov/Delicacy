@@ -7,6 +7,7 @@ end
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.1'
+gem 'redis'
 gem 'vuejs-rails'
 gem 'pg'
 gem 'slim-rails', '3.1.1'

@@ -42,6 +42,7 @@ $(document).on 'click', '[id$="_remove"]', ->
 $(document).on 'click', '[id="print_order"]', ->
   $.ajax
     url: '/orders/new/'
+    data: order: { status: 1 }
     success: (response) ->
       window.location.reload()
 

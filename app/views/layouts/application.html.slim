@@ -13,6 +13,8 @@ html
         = link_to 'Главная', root_path
       li role="presentation" 
         = link_to 'Статистика', statistics_path
+      li role="presentation" 
+        = link_to 'Заказы', orders_panel_index_path(status: Order::COOKING)  
       - if user_signed_in?
         li role="presentation" 
           = link_to 'Панель администратора', rails_admin_path

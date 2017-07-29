@@ -1,5 +1,5 @@
-class StatisticGenerator
-  attr_reader :start_date, :end_date, :item_id, :relation
+class OrderSearcher
+  attr_reader :start_date, :end_date, :item_id, :relation, :status
 
   def initialize(options = {})
     options = delete_empty_params(options)
@@ -7,12 +7,14 @@ class StatisticGenerator
     @end_date   = end_of_day(options.fetch(:end_date, end_of_month))
     @item_id    = options[:item_id]
     @relation   = Order.includes(:order_items).extending(Scopes)
+    @status     = options[:status]
   end
 
   def call
     relation.with_dates(start_date: start_date, end_date: end_date)
             .with_order_items
             .with_item(item_id)
+            .with_status(status)
   end
 
   module Scopes
@@ -27,6 +29,11 @@ class StatisticGenerator
 
     def with_order_items
       where('order_items_count > 0')
+    end
+
+    def with_status(status)
+      return self unless status
+      where(status: status)
     end
   end
 

@@ -18,30 +18,30 @@ RSpec.feature 'Menu page', type: :feature do
     click_button('Добавить в заказ', id: "item_#{item.id}")
     wait_for_ajax
     visit menu_path(category.id)
-    expect(page).to have_css('p', text: item.name, id: "order_item_#{order_item.id + 1}")
+    expect(page).to have_css('p', text: item.name, id: "order_item_#{OrderItem.last.id}")
   end
 
   scenario 'order panel have input type number', js: true do
     visit menu_path(category.id)
     click_button('Добавить в заказ', id: "item_#{item.id}")
     wait_for_ajax
-    expect(page).to have_css('input', id: "order_item_#{order_item.id + 1}_quantity")
+    expect(page).to have_css('input', id: "order_item_#{OrderItem.last.id}_quantity")
   end
 
   scenario 'change input type number will be changing value', js: true do
     visit menu_path(category.id)
     click_button('Добавить в заказ', id: "item_#{item.id}")
     wait_for_ajax
-    find('input', id: "order_item_#{order_item.id + 1}_quantity").set(20)
+    find('input', id: "order_item_#{OrderItem.last.id}_quantity").set(20)
     wait_for_ajax
-    expect(find('input', id: "order_item_#{order_item.id + 1}_quantity").value).to eq '20'
+    expect(find('input', id: "order_item_#{OrderItem.last.id}_quantity").value).to eq '20'
   end
 
   scenario 'order panel have total_price', js: true do
     visit menu_path(category.id)
     click_button('Добавить в заказ', id: "item_#{item.id}")
     wait_for_ajax
-    find('input', id: "order_item_#{order_item.id + 1}_quantity").set(2)
+    find('input', id: "order_item_#{OrderItem.last.id}_quantity").set(2)
     wait_for_ajax
     expect(find('h2', id: 'total_price').text).to eq "Итого: #{item.price * 2} рублей"
   end

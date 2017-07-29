@@ -1,0 +1,30 @@
+div.row
+  div id='order_panel'
+    div.column.col-xs-2
+      h3 =link_to 'Готовится', orders_panel_index_path(status: Order::COOKING)
+      h3 =link_to 'Готовые', orders_panel_index_path(status: Order::COOKED)
+      h3 =link_to 'Отданные', orders_panel_index_path(status: Order::SENDED)
+  div.column.col-xs-9
+    div.row    
+      table.table
+        th Номер заказа
+        th Имя
+        th Количество
+        th Цена за еденицу
+        th Итого
+        th Итого за весь заказ
+        - @orders.each do |order|
+            - order.order_items.each do |order_item|
+                tr id="order_number_#{order.current_number}_item"
+                  td = order.current_number
+                  td = order_item.item.name
+                  td = order_item.quantity
+                  td = order_item.item.price
+                  td = order_item.total_price
+            tr id="order_number_#{order.current_number}_total_price"
+              td button_tag
+              td
+              td
+              td
+              td
+              td = order.order_items.pluck(:total_price).map.sum.to_s

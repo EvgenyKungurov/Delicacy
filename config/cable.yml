@@ -1,8 +1,12 @@
 development:
-  adapter: async
+  adapter: redis
+  url: redis://localhost:6379/1
+  channel_prefix: delicacy-vue_production
 
 test:
-  adapter: async
+  adapter: redis
+  url: redis://localhost:6379/1
+  channel_prefix: delicacy-vue_production
 
 production:
   adapter: redis

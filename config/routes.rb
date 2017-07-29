@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   mount Ckeditor::Engine => '/ckeditor'
   mount RailsAdmin::Engine => '/brainstorage', as: 'rails_admin'
+  # mount ActionCable.server => '/cable'
 
   devise_for :users, controllers: { registrations: 'users/registrations' }
 
@@ -13,6 +14,7 @@ Rails.application.routes.draw do
   root 'menu#index'
   resources :orders, only: [:create, :new]
   resources :order_items, only: [:update, :destroy]
+  resources :orders_panel, only: [:index]
   resources :menu, only: [:index, :show]
   resources :statistics, only: [:index]
 

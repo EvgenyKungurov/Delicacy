@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe StatisticGenerator do
+RSpec.describe OrderSearcher do
   let!(:start_date) { Time.zone.now - 1.day }
   let!(:end_date) { Time.zone.now }
   let!(:beginning_of_month) { Time.zone.now.beginning_of_month }
@@ -11,19 +11,24 @@ RSpec.describe StatisticGenerator do
   describe 'call' do
     context 'valid params' do
       it 'should return orders all orders between dates' do
-        result = StatisticGenerator.new(params).call
+        result = OrderSearcher.new(params).call
         expect(result).to match_array Order.where('order_items_count > 0')
       end
 
       it 'should return orders includes item' do
-        result = StatisticGenerator.new(params.merge(item_id: item.id)).call
+        result = OrderSearcher.new(params.merge(item_id: item.id)).call
         expect(result.first).to eq order
+      end
+
+      it 'should return orders includes status in kitchen' do
+        result = OrderSearcher.new(params.merge(status: 1)).call
+        expect(result.first).to eq order_in_kitchen
       end
     end
 
     context 'no params' do
       it 'should return current month orders' do
-        result = StatisticGenerator.new.call
+        result = OrderSearcher.new.call
         expect(result).to eq Order
           .where(created_at: beginning_of_month..end_of_month)
           .where('order_items_count > 0')
